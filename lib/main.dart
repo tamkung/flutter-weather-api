@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   dynamic state, temp, humidity, time, icon;
   dynamic new_date;
   String apiKey = '5448c53f82d401be76751d0f5f638323';
+  late Timer timer;
 
   var url = Uri.parse(
       'http://api.airvisual.com/v2/nearest_city?key=51338a49-96f8-471d-ace4-d312985e76d5');
@@ -51,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         icon = data['data']['current']['weather']['ic'];
       });
       DateTime date = DateTime.parse(time);
-      new_date = DateFormat('yyyy-MM-dd – kk:mm').format(date);
+      new_date = DateFormat('dd/MM/yyyy - kk:mm:ss').format(date);
       print(new_date);
       print("State : $state");
       print("Temp : $temp");
@@ -64,11 +66,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     readJson();
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      setState(() {});
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('dd/MM/yyyy - kk:mm:ss').format(now);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -87,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text("DateNow : $formattedDate"),
             Text("State : $state"),
             Text("Temp : $temp"),
             Text("Humidity : $humidity"),
