@@ -33,7 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   dynamic state, temp, humidity, time, icon;
   dynamic new_date;
   String apiKey = '5448c53f82d401be76751d0f5f638323';
